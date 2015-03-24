@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\FrameworkBundle\Translation;
 
+use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 use Symfony\Component\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Translator extends BaseTranslator
+class Translator extends BaseTranslator implements WarmableInterface
 {
     protected $container;
     protected $loaderIds;
@@ -92,6 +93,25 @@ class Translator extends BaseTranslator
             list($domain, $locale, $format) = explode('.', basename($file), 3);
             $this->addResource($format, $file, $locale, $domain);
             unset($this->resourceFiles[$key]);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function warmUp($cacheDir)
+    {
+        if (null !== $this->options['cache_dir']) {
+
+            if (null !== $this->locale) {
+                $this->loadCatalogue($this->locale);
+            }
+
+            foreach ($this->getFallbackLocales() as $locale) {
+                // We need to reset the catalogues every time, otherwise file won't be generated
+                $this->catalogues = array();
+                $this->loadCatalogue($locale);
+            }
         }
     }
 }

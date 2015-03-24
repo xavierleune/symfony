@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.7.0
+-----
+
+ * Added `TranslationsCacheWarmer` to create catalogues at warmup
+
 2.6.0
 -----
 
