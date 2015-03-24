@@ -43,44 +43,17 @@ class IpRetriever implements IpRetrieverInterface
 
     protected $trustedProxies = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setTrustedProxies(array $proxies)
+    public function __construct(array $trustedProxies, array $trustedHeaders = array())
     {
-        $this->trustedProxies = $proxies;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTrustedProxies()
-    {
-        return $this->getTrustedProxies();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setTrustedHeaderName($key, $value)
-    {
-        if (!array_key_exists($key, $this->trustedHeaders)) {
-            throw new \InvalidArgumentException(sprintf('Unable to set the trusted header name for key "%s".', $key));
+        $this->trustedProxies = $trustedProxies;
+        foreach ($trustedHeaders as $key => $value) {
+            if (!array_key_exists($key, $this->trustedHeaders)) {
+                throw new \InvalidArgumentException(
+                    sprintf('Unable to set the trusted header name for key "%s".', $key)
+                );
+            }
+            $this->trustedHeaders[$key] = $value;
         }
-
-        $this->trustedHeaders[$key] = $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTrustedHeaderName($key)
-    {
-        if (!array_key_exists($key, $this->trustedHeaders)) {
-            throw new \InvalidArgumentException(sprintf('Unable to get the trusted header name for key "%s".', $key));
-        }
-
-        return $this->trustedHeaders[$key];
     }
 
     /**

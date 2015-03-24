@@ -81,11 +81,8 @@ class AkamaiIpRetrieverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientIp($expected, $remoteAddr, $httpForwardedFor, $trustedProxies)
     {
-        $ipRetriever = new AkamaiIpRetriever();
+        $ipRetriever = new AkamaiIpRetriever($trustedProxies);
         $request = $this->getRequestInstanceForClientIpTests($remoteAddr, $httpForwardedFor);
-        if ($trustedProxies) {
-            $ipRetriever->setTrustedProxies($trustedProxies);
-        }
 
         $this->assertEquals($expected[0], $ipRetriever->getClientIp($request));
     }
@@ -95,12 +92,8 @@ class AkamaiIpRetrieverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientIps($expected, $remoteAddr, $httpForwardedFor, $trustedProxies)
     {
-        $ipRetriever = new AkamaiIpRetriever();
+        $ipRetriever = new AkamaiIpRetriever($trustedProxies);
         $request = $this->getRequestInstanceForClientIpTests($remoteAddr, $httpForwardedFor);
-
-        if ($trustedProxies) {
-            $ipRetriever->setTrustedProxies($trustedProxies);
-        }
 
         $this->assertEquals($expected, $ipRetriever->getClientIps($request));
 
@@ -112,12 +105,8 @@ class AkamaiIpRetrieverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientIpsForwarded($expected, $remoteAddr, $httpForwarded, $trustedProxies)
     {
-        $ipRetriever = new AkamaiIpRetriever();
+        $ipRetriever = new AkamaiIpRetriever($trustedProxies);
         $request = $this->getRequestInstanceForClientIpsForwardedTests($remoteAddr, $httpForwarded);
-
-        if ($trustedProxies) {
-            $ipRetriever->setTrustedProxies($trustedProxies);
-        }
 
         $this->assertEquals($expected, $ipRetriever->getClientIps($request));
 
@@ -129,12 +118,8 @@ class AkamaiIpRetrieverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientIpsRealIp($expected, $remoteAddr, $httpRealIp, $trustedProxies)
     {
-        $ipRetriever = new AkamaiIpRetriever();
+        $ipRetriever = new AkamaiIpRetriever($trustedProxies);
         $request = $this->getRequestInstanceForClientIpsRealIpTests($remoteAddr, $httpRealIp);
-
-        if ($trustedProxies) {
-            $ipRetriever->setTrustedProxies($trustedProxies);
-        }
 
         $this->assertEquals($expected, $ipRetriever->getClientIps($request));
 
@@ -146,12 +131,8 @@ class AkamaiIpRetrieverTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientIpsTrueClientIp($expected, $remoteAddr, $httpTrueClientIp, $trustedProxies)
     {
-        $ipRetriever = new AkamaiIpRetriever();
+        $ipRetriever = new AkamaiIpRetriever($trustedProxies);
         $request = $this->getRequestInstanceForClientIpsTrueClientIpTests($remoteAddr, $httpTrueClientIp);
-
-        if ($trustedProxies) {
-            $ipRetriever->setTrustedProxies($trustedProxies);
-        }
 
         $this->assertEquals($expected, $ipRetriever->getClientIps($request));
 

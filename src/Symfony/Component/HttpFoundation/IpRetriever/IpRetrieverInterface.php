@@ -21,47 +21,6 @@ interface IpRetrieverInterface
     const HEADER_REAL_IP = 'real_ip';
 
     /**
-     * Sets a list of trusted proxies.
-     *
-     * You should only list the reverse proxies that you manage directly.
-     *
-     * @param array $proxies A list of trusted proxies
-     *
-     * @api
-     */
-    public function setTrustedProxies(array $proxies);
-
-    /**
-     * Gets the list of trusted proxies.
-     *
-     * @return array An array of trusted proxies.
-     */
-    public function getTrustedProxies();
-
-    /**
-     * Sets the name for trusted headers.
-     *
-     * Setting an empty value allows to disable the trusted header for the given key.
-     *
-     * @param string $key   The header key
-     * @param string $value The header name
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setTrustedHeaderName($key, $value);
-
-    /**
-     * Gets the trusted proxy header name.
-     *
-     * @param string $key The header key
-     *
-     * @return string The header name
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function getTrustedHeaderName($key);
-
-    /**
      * Returns the client IP addresses.
      *
      * In the returned array the most trusted IP address is first, and the
